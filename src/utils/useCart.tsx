@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 interface CartItem {
   id: number;
@@ -11,8 +11,8 @@ const useCart = () => {
 
   // Load cart from local storage on initial render
   useEffect(() => {
-    const storedCart = localStorage.getItem("cart");
-    console.log(storedCart);
+    const storedCart = localStorage.getItem('cart');
+    console.log(storedCart)
     if (storedCart) {
       setCart(JSON.parse(storedCart));
     }
@@ -20,17 +20,14 @@ const useCart = () => {
 
   // Update local storage whenever cart changes
   useEffect(() => {
-    // Timeout is needed for dom to render before getting localStorage value
-    setTimeout(() => {
-        localStorage.setItem("cart", JSON.stringify(cart));
-    }, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
   const addToCart = (id: number, name: string, qty: number): void => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === id);
+    setCart(prevCart => {
+      const existingItem = prevCart.find(item => item.id === id);
       if (existingItem) {
-        return prevCart.map((item) =>
+        return prevCart.map(item =>
           item.id === id ? { ...item, qty: item.qty + qty } : item
         );
       } else {
@@ -40,16 +37,14 @@ const useCart = () => {
   };
 
   const updateQty = (id: number, change: number): void => {
-    setCart((prevCart) => {
-      const updatedCart = prevCart
-        .map((item) => {
-          if (item.id === id) {
-            const newQty = Math.max(0, item.qty + change);
-            return newQty === 0 ? null : { ...item, qty: newQty };
-          }
-          return item;
-        })
-        .filter((item): item is CartItem => item !== null);
+    setCart(prevCart => {
+      const updatedCart = prevCart.map(item => {
+        if (item.id === id) {
+          const newQty = Math.max(0, item.qty + change);
+          return newQty === 0 ? null : { ...item, qty: newQty };
+        }
+        return item;
+      }).filter((item): item is CartItem => item !== null);
 
       // If the item was removed (qty became 0), ensure it's not in the cart
       if (updatedCart.length < prevCart.length) {
@@ -60,7 +55,7 @@ const useCart = () => {
   };
 
   const removeProduct = (id: number): void => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+    setCart(prevCart => prevCart.filter(item => item.id !== id));
   };
 
   const getCart = (): CartItem[] => cart;

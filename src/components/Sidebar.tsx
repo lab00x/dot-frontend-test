@@ -26,8 +26,8 @@ function Sidebar() {
       <ul className="side-menu w-full flex flex-col px-5 py-10">
         {extractCategories(categoryData).map(
           ({ category, subCategories }, id) => (
-            <React.Fragment>
-              <Link to={`/#${category}`} key={id} className="my-3">
+            <React.Fragment key={id}>
+              <Link to={`/#${category}`}  className="my-3">
                 <li>{category}</li>
               </Link>
               <ul className="sub-category pl-3">

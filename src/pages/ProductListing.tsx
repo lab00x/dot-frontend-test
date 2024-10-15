@@ -123,7 +123,7 @@ const ProductListing = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-3 gap-5">
           {productsData.products.map((product: Product, id: number) => (
             <ProductCard key={`product__${id}`} product={product} />
           ))}
