@@ -31,9 +31,9 @@ function Sidebar() {
                 <li>{category}</li>
               </Link>
               <ul className="sub-category pl-3">
-                {subCategories.map((subcategory, idx) => (
-                  <Link to={`/#${subcategory}`} key={`${id}__${idx}`}>
-                    <li>{subcategory}</li>
+                {subCategories.map((subCategory, idx) => (
+                  <Link to={`/#${subCategory}`} key={`${id}__${idx}`}>
+                    <li>{subCategory}</li>
                   </Link>
                 ))}
               </ul>

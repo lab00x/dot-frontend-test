@@ -46,7 +46,7 @@ function ProductCard({ product }: { product: Product }) {
             ({product.reviews} reviews)
           </span>
         </div>
-        <h3 className="text-lg font-semibold">{product.price}</h3>
+        <h3 className="text-lg font-semibold">${product.price}</h3>
 
         <Button
           className={twMerge(

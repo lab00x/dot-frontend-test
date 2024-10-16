@@ -15,7 +15,7 @@ export interface ProductPayload {
   name: string;
   brand: string;
   category: string;
-  sub_category: string;
+  subCategory: string;
   price: number;
   stock: number;
   description: string;
@@ -28,7 +28,7 @@ export interface ProductResponse {
   name: string;
   brand: string;
   category: string;
-  sub_category: string;
+  subCategory: string;
   price: number;
   stock: number;
   description: string;

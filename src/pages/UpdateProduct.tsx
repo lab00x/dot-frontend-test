@@ -33,7 +33,7 @@ const UpdateProduct = () => {
       image_url: "",
       specifications: [],
       stock: 0,
-      sub_category: "",
+      subCategory: "",
     };
     if (productId) {
       mutation.mutate({ productId, ...productData });

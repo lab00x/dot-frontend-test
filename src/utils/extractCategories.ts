@@ -38,7 +38,7 @@ export interface Product {
         categoryMap[category] = new Set(); // Use a Set to avoid duplicates
       }
   
-      // Add the subcategory to the respective category
+      // Add the subCategory to the respective category
       categoryMap[category].add(subCategory);
     });
   

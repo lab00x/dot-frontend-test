@@ -28,7 +28,7 @@ const AddNewProduct = () => {
       name: formData.get("name") as string,
       brand: formData.get("brand") as string,
       category: formData.get("category") as string,
-      sub_category: formData.get("sub_category") as string,
+      subCategory: formData.get("subCategory") as string,
       price: parseFloat(formData.get("price") as string),
       stock: parseInt(formData.get("stock") as string, 10),
       description: formData.get("description") as string,
@@ -75,7 +75,7 @@ const AddNewProduct = () => {
             />
             <Input
               label="Sub category"
-              name="sub_category"
+              name="subCategory"
               type="text"
               placeholder="Sub-category"
               required
