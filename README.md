@@ -26,6 +26,8 @@
 - Adding debouncing to the product search so it doesn't make api call at every change of input field character
 - Adding remove functionality to specifications.
 - Showing list of products in Cart
+- Making the application responsive
+- Writing unit test for neccessary components/units
 
 ## GitHub Repository
 

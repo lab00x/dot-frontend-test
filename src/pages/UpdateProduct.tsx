@@ -50,7 +50,7 @@ const UpdateProduct = () => {
       updateProduct(productId, payload),
     onSuccess: (data: ProductResponse) => {
       console.log("Product updated:", data);
-      toast.success("Product created successfully");
+      toast.success("Product updated successfully");
       navigateTo("/");
     },
     onError: (error: Error) => {
@@ -69,6 +69,7 @@ const UpdateProduct = () => {
   });
 
   const [payload, setPayload] = useState<ProductPayload>({
+    id: "",
     name: "",
     category: "",
     description: "",
@@ -81,8 +82,8 @@ const UpdateProduct = () => {
   });
 
   useEffect(() => {
-    console.log(productData);
     setPayload({
+      id: productData?.id,
       name: productData?.name,
       category: productData?.category,
       description: productData?.description,
@@ -98,21 +99,21 @@ const UpdateProduct = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+    // const formData = new FormData(event.currentTarget);
 
-    const productData: ProductPayload = {
-      name: formData.get("name") as string,
-      price: parseFloat(formData.get("price") as string),
-      brand: "",
-      category: "",
-      description: "",
-      imageUrl: "",
-      specifications: {},
-      stock: 0,
-      subCategory: "",
-    };
+    // const productData: ProductPayload = {
+    //   name: formData.get("name") as string,
+    //   price: parseFloat(formData.get("price") as string),
+    //   brand: "",
+    //   category: "",
+    //   description: "",
+    //   imageUrl: "",
+    //   specifications: {},
+    //   stock: 0,
+    //   subCategory: "",
+    // };
     if (productId) {
-      mutation.mutate({ productId, ...productData });
+      mutation.mutate({ productId, ...payload });
     }
   };
 

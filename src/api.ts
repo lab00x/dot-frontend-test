@@ -13,6 +13,7 @@ interface Specification {
 }
 
 export interface ProductPayload {
+  id?: string;
   name: string;
   brand: string;
   category: string;
@@ -97,7 +98,10 @@ export const updateProduct = async (
   payload: ProductPayload
 ) => {
   try {
-    const response = await axiosInstance.patch(`/products/${productId}`, payload);
+    const response = await axiosInstance.patch(
+      `/products/${productId}`,
+      payload
+    );
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
