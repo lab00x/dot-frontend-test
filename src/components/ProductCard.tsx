@@ -9,7 +9,8 @@ import { twMerge } from "tailwind-merge";
 function ProductCard({ product }: { product: Product }) {
   const [imgSrc, setImgSrc] = useState(product.imageUrl);
   const [isDefaultImg, setIsDefaultImg] = useState(false);
-  const { addToCart } = useCart();
+  const { addToCart, cart, removeFromCart } = useCart();
+  const productInCart = cart.find((item) => item.id == product.id);
   const handleOnError = () => {
     setImgSrc(productImageUrl); // Use the fallback image if the primary fails
     setIsDefaultImg(true);
@@ -48,10 +49,18 @@ function ProductCard({ product }: { product: Product }) {
         <h3 className="text-lg font-semibold">{product.price}</h3>
 
         <Button
-          className="w-full"
-          onClick={() => addToCart(product.id, product.name, 1)}
+          className={twMerge(
+            "w-full",
+            productInCart &&
+              "bg-transparent hover:bg-gray-200 border text-black border-black"
+          )}
+          onClick={() =>
+            productInCart
+              ? removeFromCart(product.id)
+              : addToCart(product.id, product.name, 1)
+          }
         >
-          Add to Cart
+          {productInCart ? "Remove from Cart" : "Add to Cart"}
         </Button>
       </div>
     </div>

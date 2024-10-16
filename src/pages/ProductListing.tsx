@@ -5,15 +5,9 @@ import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import ProductCard from "@/components/ProductCard";
 import { Product } from "@/utils/extractCategories";
+import SelectInput from "@/components/SelectInput";
 
 const ProductListing = () => {
   const {
@@ -85,19 +79,12 @@ const ProductListing = () => {
               <label htmlFor="sortBy" className="text-sm font-medium">
                 Sort By
               </label>
-              <Select>
-                <SelectTrigger
-                  name="sortBy"
-                  id="sortBy"
-                  className="w-[320px] bg-white"
-                >
-                  <SelectValue placeholder="Sort By" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="price">Price</SelectItem>
-                  <SelectItem value="category">Category</SelectItem>
-                </SelectContent>
-              </Select>
+              <SelectInput
+                options={[
+                  { value: "price", label: "Price" },
+                  { value: "category", label: "Category" },
+                ]}
+              />
             </div>
           </div>
 
@@ -106,19 +93,12 @@ const ProductListing = () => {
               <label htmlFor="order" className="text-sm font-medium">
                 Order
               </label>
-              <Select>
-                <SelectTrigger
-                  name="order"
-                  id="order"
-                  className="w-[320px] bg-white"
-                >
-                  <SelectValue placeholder="Order" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="asc">Ascending</SelectItem>
-                  <SelectItem value="dsc">Descending</SelectItem>
-                </SelectContent>
-              </Select>
+              <SelectInput
+                options={[
+                  { value: "asc", label: "Ascending" },
+                  { value: "dsc", label: "Descending" },
+                ]}
+              />
             </div>
           </div>
         </div>
@@ -128,7 +108,29 @@ const ProductListing = () => {
             <ProductCard key={`product__${id}`} product={product} />
           ))}
         </div>
-        {/* <pre>{JSON.stringify(productsData, null, 2)}</pre> */}
+
+        <div className="pagination flex items-center justify-between py-10">
+          <div className="flex items-center gap-2">
+            <Button disabled={productsData.currentPage === 1}>Previous</Button>
+            <span className="text-sm">Page {productsData.currentPage}</span>
+            <Button
+              disabled={productsData.currentPage >= productsData.totalPages}
+            >
+              Next
+            </Button>
+          </div>
+
+          <SelectInput
+            options={[
+              { value: "2", label: "2 per page" },
+              { value: "5", label: "5 per page" },
+              { value: "10", label: "10 per page" },
+              { value: "20", label: "20 per page" },
+            ]}
+            className="w-[100px]"
+            placeholder="per page"
+          />
+        </div>
       </main>
     </DashboardLayout>
   );

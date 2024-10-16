@@ -1,4 +1,10 @@
-import { useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 interface CartItem {
   id: number;
@@ -6,23 +12,32 @@ interface CartItem {
   qty: number;
 }
 
-const useCart = () => {
+interface CartContextType {
+  cart: CartItem[];
+  addToCart: (id: number, name: string, qty: number) => void;
+  updateQty: (id: number, change: number) => void;
+  removeFromCart: (id: number) => void;
+  getCart: () => CartItem[];
+}
+
+const CartContext = createContext<CartContextType | undefined>(undefined);
+
+export const CartProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  // Load cart from local storage on initial render
   useEffect(() => {
     const storedCart = localStorage.getItem("cart");
-    console.log(storedCart);
     if (storedCart) {
       setCart(JSON.parse(storedCart));
     }
   }, []);
 
-  // Update local storage whenever cart changes
   useEffect(() => {
-    // Timeout is needed for dom to render before getting localStorage value
+    // Set timeout allows the page/dom to render before accessing the value of cart from localstore
     setTimeout(() => {
-        localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem("cart", JSON.stringify(cart));
     }, 1);
   }, [cart]);
 
@@ -51,21 +66,31 @@ const useCart = () => {
         })
         .filter((item): item is CartItem => item !== null);
 
-      // If the item was removed (qty became 0), ensure it's not in the cart
-      if (updatedCart.length < prevCart.length) {
-        return updatedCart;
-      }
-      return prevCart;
+      return updatedCart;
     });
   };
 
-  const removeProduct = (id: number): void => {
+  const removeFromCart = (id: number): void => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
   const getCart = (): CartItem[] => cart;
 
-  return { addToCart, updateQty, removeProduct, getCart };
+  return (
+    <CartContext.Provider
+      value={{ cart, addToCart, updateQty, removeFromCart, getCart }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
+};
+
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (context === undefined) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
 };
 
 export default useCart;
