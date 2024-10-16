@@ -1,20 +1,23 @@
 # Dot Frontend Test
 
-## Setup Instructions
+## Remark
+- This is an interesting task but 2 (two) days are not sufficient to do the required tasks. I missed the email notification for the test when it was first sent (I took the blame for that) and I got the grace to still attempt on the 14th of October, 2024 and submit on the 16th of October. I hope this will be considered in the judgement for my level of competence.  
 
-- run `git clone https://github.com/lab00x/dot-frontend-test.git` in your command prompt
-- run `cd dot-frontend-test`
+## Setup Instructions
+- run `git clone https://github.com/lab00x/dot-frontend-test.git` in your command prompt to clone the client side application.
+- run `cd dot-frontend-test` to change directory into the project folder.
 - run `npm install` to install all the required dependencies
 - then use `npm run dev` to the application in the development environment
 
 ## Assumptions and Design Decisions
 
-- I'm assuming the tester will run the server locally concurrently as this client side application to be able to see the client-server interactions.
+- I'm assuming the tester will run the server locally concurrently with this client side application, so as to be able to see the client-server interactions.
 - I followed the screenshots shared in the project description and use my discretion on some parts.
 
 ## Additional Features Implemented
 
 - Utility functions to extract product categories for sidebar menu options (/utils/extractCategories.ts)
+- I handled the product images link that a broken with default image icon.
 
 ## Areas for Improvement
 
@@ -22,7 +25,7 @@
 
 ## GitHub Repository
 
-[Insert the link to your GitHub repository here when you're done]
+[https://github.com/lab00x/dot-frontend-test.git]
 
 <!-- ***************************************************** -->
 
