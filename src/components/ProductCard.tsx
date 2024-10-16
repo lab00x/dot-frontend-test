@@ -3,8 +3,10 @@ import { Product } from "@/utils/extractCategories";
 import { Button } from "./ui/button";
 import useCart from "@/hooks/useCart";
 import productImageUrl from "@/assets/images/product-not-found.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { Link } from "react-router-dom";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 function ProductCard({ product }: { product: Product }) {
   const [imgSrc, setImgSrc] = useState(product.imageUrl);
@@ -15,10 +17,18 @@ function ProductCard({ product }: { product: Product }) {
     setImgSrc(productImageUrl); // Use the fallback image if the primary fails
     setIsDefaultImg(true);
   };
-
+  useEffect(() => {
+    if (!product.imageUrl) {
+      setImgSrc(productImageUrl);
+      setIsDefaultImg(true);
+    }
+  }, []);
   return (
     <div className="w-full min-h-[320px] overflow-hidden rounded-lg shadow-sm border border-gray-200">
-      <div className=" relative image-container flex items-center justify-center w-full h-[200px] bg-gray-200">
+      <Link
+        to={`/product/${product.id}`}
+        className=" relative image-container flex items-center justify-center w-full h-[200px] bg-gray-200"
+      >
         <img
           src={imgSrc}
           alt="product_image_not_found"
@@ -28,25 +38,22 @@ function ProductCard({ product }: { product: Product }) {
           )}
           onError={handleOnError}
         />
-        {/* <img
-          src={productImageUrl}
-          alt="product_image_not_found"
-          className="w-full h-full absolute object-contain"
-        /> */}
-      </div>
+      </Link>
       <div className="w-full min-h-[170px] bg-white px-4 py-2 flex flex-col gap-1.5">
-        <h5 className="text-md font-semibold">{product.name}</h5>
-        <p className="text-sm">{product.brand ?? product.category}</p>
-        <div className="star-rating flex items-center gap-1">
-          <span className="w-4 flex">
-            <SVGS.StarIcon />
-          </span>
-          <span className="font-medium text-sm">{product.rating}</span>
-          <span className="font-normal text-gray-600 text-sm">
-            ({product.reviews} reviews)
-          </span>
-        </div>
-        <h3 className="text-lg font-semibold">${product.price}</h3>
+        <Link to={`/product/${product.id}`}>
+          <h5 className="text-md font-semibold">{product.name}</h5>
+          <p className="text-sm">{product.brand ?? product.category}</p>
+          <div className="star-rating flex items-center gap-1">
+            <span className="w-4 flex">
+              <SVGS.StarIcon />
+            </span>
+            <span className="font-medium text-sm">{product.rating}</span>
+            <span className="font-normal text-gray-600 text-sm">
+              ({product.reviews} reviews)
+            </span>
+          </div>
+          <h3 className="text-lg font-semibold">{formatCurrency(product.price)}</h3>
+        </Link>
 
         <Button
           className={twMerge(

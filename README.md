@@ -1,9 +1,11 @@
 # Dot Frontend Test
 
 ## Remark
-- This is an interesting task but 2 (two) days are not sufficient to do the required tasks. I missed the email notification for the test when it was first sent (I took the blame for that) and I got the grace to still attempt on the 14th of October, 2024 and submit on the 16th of October. I hope this will be considered in the judgement for my level of competence.  
+
+- This is an interesting task but 2 (two) days are not sufficient to do the required tasks. I missed the email notification for the test when it was first sent (I took the blame for that) and I got the grace to still attempt on the 14th of October, 2024 and submit on the 16th of October. I hope this will be considered in the judgement for my level of competence.
 
 ## Setup Instructions
+
 - run `git clone https://github.com/lab00x/dot-frontend-test.git` in your command prompt to clone the client side application.
 - run `cd dot-frontend-test` to change directory into the project folder.
 - run `npm install` to install all the required dependencies
@@ -22,6 +24,8 @@
 ## Areas for Improvement
 
 - Adding debouncing to the product search so it doesn't make api call at every change of input field character
+- Adding remove functionality to specifications.
+- Showing list of products in Cart
 
 ## GitHub Repository
 

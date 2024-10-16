@@ -12,7 +12,7 @@ export interface InputProps
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
     return (
-      <div className={twMerge("w-auto", props.fullCol && "col-span-2")}>
+      <div className={twMerge("w-full", props.fullCol && "col-span-2")}>
         <label htmlFor={props.name} className="flex text-sm py-1.5 font-medium">
           {props.label}
         </label>

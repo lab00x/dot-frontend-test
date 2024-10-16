@@ -11,7 +11,7 @@ export interface Product {
     imageUrl: string;
     rating: number;
     reviews: number;
-    specifications: Record<string, any>; // Adjust type as needed
+    specifications: Record<string, string>; // Adjust type as needed
   }
   
   interface ExtractedCategory {

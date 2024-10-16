@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { createProduct, ProductPayload, ProductResponse } from "../api"; // Adjust the import based on your setup
 import DashboardLayout from "@/components/DashboardLayout";
@@ -6,17 +6,43 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { camelCaseSpacing } from "@/utils/camelCaseSpacing";
 
 const AddNewProduct = () => {
   const navigateTo = useNavigate();
 
+  const [specKey, setSpecKey] = useState("");
+  const [specValue, setSpecValue] = useState("");
+  const [specifications, setSpecifications] = useState<{
+    [key: string]: string;
+  }>({});
+
+  const addSpecification = () => {
+    if (!specKey || !specValue) {
+      toast("Empty specification cannot be added.");
+    } else if (Object.keys(specifications).find((key) => key === specKey)) {
+      toast.error("Specification already exist");
+    } else {
+      setSpecifications({
+        ...specifications,
+        [specKey]: specValue,
+      });
+      setSpecKey("");
+      setSpecValue("");
+      toast.success("Specification added");
+    }
+  };
   const mutation = useMutation<ProductResponse, Error, ProductPayload>({
     mutationFn: ({ ...payload }) => createProduct(payload),
     onSuccess: (data: ProductResponse) => {
       console.log("Product updated:", data);
+      toast.success("Product created successfully");
+      navigateTo("/");
     },
     onError: (error: Error) => {
       console.error("Error updating product:", error);
+      toast.error(error.message ?? "Error occured");
     },
   });
 
@@ -32,8 +58,8 @@ const AddNewProduct = () => {
       price: parseFloat(formData.get("price") as string),
       stock: parseInt(formData.get("stock") as string, 10),
       description: formData.get("description") as string,
-      image_url: formData.get("image_url") as string,
-      specifications: [], // You can populate this based on your application's needs
+      imageUrl: formData.get("imageUrl") as string,
+      specifications: specifications,
     };
 
     mutation.mutate(productData);
@@ -41,7 +67,7 @@ const AddNewProduct = () => {
 
   return (
     <DashboardLayout>
-      <main className="w-full h-screen">
+      <main className="w-full min-h-screen">
         <div className="w-full flex items-center justify-between">
           <h4 className="text-lg font-medium">Create New Product</h4>
         </div>
@@ -104,13 +130,56 @@ const AddNewProduct = () => {
             />
             <Input
               label="Image URL"
-              name="image_url"
+              name="imageUrl"
               type="file"
               placeholder="Image URL"
               required
               fullCol={true}
               className="col-span-2"
             />
+
+            <div className="w-full col-span-2 grid grid-cols-2 gap-5">
+              <Input
+                value={specKey}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSpecKey(e.target.value)
+                }
+                label="Specifications"
+                name="spec_key"
+                placeholder="Specification Key"
+              />
+              <div className="w-full flex items-center gap-2 pt-5">
+                <Input
+                  value={specValue}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setSpecValue(e.target.value)
+                  }
+                  name="spec_value"
+                  placeholder="Specification Value"
+                  className="w-full"
+                />
+                <Button
+                  type="button"
+                  onClick={addSpecification}
+                  className="mt-3"
+                >
+                  Add
+                </Button>
+              </div>
+            </div>
+            <div className="col-span-2 mt-5">
+              {Object.keys(specifications).map((key: string, id: number) => {
+                const value = specifications[key];
+                return (
+                  <div key={id} className="flex items-center">
+                    <span className="font-medium text-sm">
+                      {camelCaseSpacing(key)}:{" "}
+                    </span>
+                    <span className="text-md px-3.5">{value}</span>
+                  </div>
+                );
+              })}
+            </div>
 
             <div className="col-span-2 mt-10 flex items-center justify-between">
               <Button type="submit">Create Product</Button>

@@ -29,7 +29,7 @@ const ProductListing = () => {
 
   return (
     <DashboardLayout>
-      <main className="w-full h-screen">
+      <main className="w-full min-h-screen">
         <div className="w-full flex items-center justify-between">
           <h4 className="text-lg font-medium">All Products</h4>
           <Button asChild>

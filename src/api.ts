@@ -7,8 +7,9 @@ const axiosInstance = axios.create({
 });
 
 interface Specification {
-  key: string;
-  value: string;
+  [key: string]: string;
+  // key: string;
+  // value: string;
 }
 
 export interface ProductPayload {
@@ -19,8 +20,8 @@ export interface ProductPayload {
   price: number;
   stock: number;
   description: string;
-  image_url: string;
-  specifications: Specification[];
+  imageUrl: string;
+  specifications: Specification;
 }
 
 export interface ProductResponse {
@@ -32,7 +33,7 @@ export interface ProductResponse {
   price: number;
   stock: number;
   description: string;
-  image_url: string;
+  imageUrl: string;
   specifications: Specification[];
 }
 
@@ -68,7 +69,7 @@ export const fetchProducts = async () => {
 
 export const fetchSingleProduct = async (productId: string) => {
   try {
-    const response = await axiosInstance.get(`/${productId}`);
+    const response = await axiosInstance.get(`/products/${productId}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -80,7 +81,10 @@ export const createProduct = async (
   payload: ProductPayload
 ): Promise<ProductResponse> => {
   try {
-    const response = await axiosInstance.post<ProductResponse>(`/products`, payload);
+    const response = await axiosInstance.post<ProductResponse>(
+      `/products`,
+      payload
+    );
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -93,7 +97,7 @@ export const updateProduct = async (
   payload: ProductPayload
 ) => {
   try {
-    const response = await axiosInstance.patch(`/${productId}`, payload);
+    const response = await axiosInstance.patch(`/products/${productId}`, payload);
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -103,7 +107,7 @@ export const updateProduct = async (
 
 export const deleteProduct = async (productId: string) => {
   try {
-    const response = await axiosInstance.delete(`/${productId}`);
+    const response = await axiosInstance.delete(`/products/${productId}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
