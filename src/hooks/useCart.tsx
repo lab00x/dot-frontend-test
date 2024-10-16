@@ -10,11 +10,12 @@ interface CartItem {
   id: number;
   name: string;
   qty: number;
+  price: number;
 }
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (id: number, name: string, qty: number) => void;
+  addToCart: (id: number, name: string, qty: number, price: number) => void;
   updateQty: (id: number, change: number) => void;
   removeFromCart: (id: number) => void;
   getCart: () => CartItem[];
@@ -41,7 +42,12 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
     }, 1);
   }, [cart]);
 
-  const addToCart = (id: number, name: string, qty: number): void => {
+  const addToCart = (
+    id: number,
+    name: string,
+    qty: number,
+    price: number
+  ): void => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === id);
       if (existingItem) {
@@ -49,7 +55,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
           item.id === id ? { ...item, qty: item.qty + qty } : item
         );
       } else {
-        return [...prevCart, { id, name, qty }];
+        return [...prevCart, { id, name, qty, price: price }];
       }
     });
   };

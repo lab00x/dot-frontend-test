@@ -152,7 +152,7 @@ const ProductDetails = () => {
                   onClick={() =>
                     productInCart
                       ? removeFromCart(product.id)
-                      : addToCart(product.id, product.name, 1)
+                      : addToCart(product.id, product.name, 1, product.price)
                   }
                   className={
                     productInCart &&

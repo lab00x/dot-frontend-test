@@ -52,7 +52,9 @@ function ProductCard({ product }: { product: Product }) {
               ({product.reviews} reviews)
             </span>
           </div>
-          <h3 className="text-lg font-semibold">{formatCurrency(product.price)}</h3>
+          <h3 className="text-lg font-semibold">
+            {formatCurrency(product.price)}
+          </h3>
         </Link>
 
         <Button
@@ -64,7 +66,7 @@ function ProductCard({ product }: { product: Product }) {
           onClick={() =>
             productInCart
               ? removeFromCart(product.id)
-              : addToCart(product.id, product.name, 1)
+              : addToCart(product.id, product.name, 1, product.price)
           }
         >
           {productInCart ? "Remove from Cart" : "Add to Cart"}
