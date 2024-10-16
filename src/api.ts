@@ -80,7 +80,7 @@ export const createProduct = async (
   payload: ProductPayload
 ): Promise<ProductResponse> => {
   try {
-    const response = await axiosInstance.post<ProductResponse>(`/`, payload);
+    const response = await axiosInstance.post<ProductResponse>(`/products`, payload);
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);

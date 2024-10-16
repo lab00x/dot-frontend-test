@@ -1,19 +1,24 @@
 import React from "react";
 import { useMutation } from "@tanstack/react-query";
 import { createProduct, ProductPayload, ProductResponse } from "../api"; // Adjust the import based on your setup
+import DashboardLayout from "@/components/DashboardLayout";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const AddNewProduct = () => {
-  const mutation = useMutation<ProductResponse, Error, ProductPayload>(
-    createProduct,
-    {
-      onSuccess: (data: ProductResponse) => {
-        console.log("Product created:", data);
-      },
-      onError: (error: Error) => {
-        console.error("Error creating product:", error);
-      },
-    }
-  );
+  const navigateTo = useNavigate();
+
+  const mutation = useMutation<ProductResponse, Error, ProductPayload>({
+    mutationFn: ({ ...payload }) => createProduct(payload),
+    onSuccess: (data: ProductResponse) => {
+      console.log("Product updated:", data);
+    },
+    onError: (error: Error) => {
+      console.error("Error updating product:", error);
+    },
+  });
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,23 +40,92 @@ const AddNewProduct = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input name="name" type="text" placeholder="Product Name" required />
-      <input name="brand" type="text" placeholder="Brand" required />
-      <input name="category" type="text" placeholder="Category" required />
-      <input
-        name="sub_category"
-        type="text"
-        placeholder="Sub-category"
-        required
-      />
-      <input name="price" type="number" placeholder="Price" required />
-      <input name="stock" type="number" placeholder="Stock" required />
-      <textarea name="description" placeholder="Description" required />
-      <input name="image_url" type="url" placeholder="Image URL" required />
-      {/* Add fields for specifications as needed */}
-      <button type="submit">Create Product</button>
-    </form>
+    <DashboardLayout>
+      <main className="w-full h-screen">
+        <div className="w-full flex items-center justify-between">
+          <h4 className="text-lg font-medium">Create New Product</h4>
+        </div>
+        <div className="w-full my-5 bg-white rounded-xl p-5">
+          <h4 className="text-md font-medium my-3">Create New Product</h4>
+
+          <form
+            onSubmit={handleSubmit}
+            className="grid grid-cols-2 my-10 gap-5"
+          >
+            <Input
+              label="Product Name"
+              name="name"
+              type="text"
+              placeholder="Product Name"
+              required
+            />
+            <Input
+              label="Brand"
+              name="brand"
+              type="text"
+              placeholder="Brand"
+              required
+            />
+            <Input
+              label="Category"
+              name="category"
+              type="text"
+              placeholder="Category"
+              required
+            />
+            <Input
+              label="Sub category"
+              name="sub_category"
+              type="text"
+              placeholder="Sub-category"
+              required
+            />
+            <Input
+              label="Price"
+              name="price"
+              type="number"
+              placeholder="Price"
+              required
+            />
+            <Input
+              label="Stock"
+              name="stock"
+              type="number"
+              placeholder="Stock"
+              required
+            />
+            <Textarea
+              label="Description"
+              name="description"
+              placeholder="Description"
+              required
+              fullCol={true}
+              className="resize-none"
+            />
+            <Input
+              label="Image URL"
+              name="image_url"
+              type="file"
+              placeholder="Image URL"
+              required
+              fullCol={true}
+              className="col-span-2"
+            />
+
+            <div className="col-span-2 mt-10 flex items-center justify-between">
+              <Button type="submit">Create Product</Button>
+              <Button
+                onClick={() => navigateTo("/")}
+                type="button"
+                className="bg-white hover:bg-white text-black border border-gray-200"
+              >
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </div>
+      </main>
+    </DashboardLayout>
   );
 };
 
