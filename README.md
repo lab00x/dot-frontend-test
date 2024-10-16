@@ -23,6 +23,8 @@
 
 ## Areas for Improvement
 
+- Make the pagination work
+- Make product listing filter work
 - Adding debouncing to the product search so it doesn't make api call at every change of input field character
 - Adding remove functionality to specifications.
 - Making the application responsive

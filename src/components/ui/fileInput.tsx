@@ -11,7 +11,7 @@ export interface fileInputProps
 
 const FileInput = React.forwardRef<HTMLInputElement, fileInputProps>(
   ({ className, type, value, ...props }, ref) => {
-    const fileInput = React.useRef(null);
+    const fileInput = React.useRef<HTMLInputElement | null>(null);
     return (
       <div className={twMerge("w-full", props.fullCol && "col-span-2")}>
         <label htmlFor={props.name} className="flex text-sm py-1.5 font-medium">
@@ -32,7 +32,7 @@ const FileInput = React.forwardRef<HTMLInputElement, fileInputProps>(
             "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
             className
           )}
-          onClick={() => fileInput?.current && fileInput?.current.click()}
+          onClick={() => fileInput?.current && fileInput?.current?.click()}
           {...props}
         >
           {JSON.stringify(value) == "{}"
